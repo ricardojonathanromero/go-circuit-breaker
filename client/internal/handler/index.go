@@ -14,7 +14,7 @@ type Handler struct {
 	httpRequest request.HttpRequest
 }
 
-func (h *Handler) Ping(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) Ping(w http.ResponseWriter, _ *http.Request) {
 	res, err := h.httpRequest.PingToServerApp()
 	data := map[string]string{
 		"message": "Message",
@@ -23,9 +23,9 @@ func (h *Handler) Ping(w http.ResponseWriter, r *http.Request) {
 
 	byteData, _ := json.Marshal(data)
 	if err != nil {
-		w.Write(byteData)
+		_, _ = w.Write(byteData)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Write(byteData)
+	_, _ = w.Write(byteData)
 }

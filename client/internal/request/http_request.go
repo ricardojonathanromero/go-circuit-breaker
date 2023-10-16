@@ -35,7 +35,12 @@ func (h *HttpRequest) PingToServerApp() ([]byte, error) {
 			fmt.Println("Errored when sending request to the server")
 			return nil, err
 		}
-		defer resp.Body.Close()
+		defer func(Body io.ReadCloser) {
+			err := Body.Close()
+			if err != nil {
+				fmt.Println(err)
+			}
+		}(resp.Body)
 
 		response, err := io.ReadAll(resp.Body)
 		if err != nil {
