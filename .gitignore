@@ -19,3 +19,7 @@
 
 # Go workspace file
 go.work
+
+# intelliJ and vscode
+.idea
+.vscode
